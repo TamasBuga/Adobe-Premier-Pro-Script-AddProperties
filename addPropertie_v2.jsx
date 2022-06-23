@@ -125,7 +125,7 @@ if (hasEffect == false) {
     // A script belépett ebbe a kódba, mivel a "hasEffect" továbbra is false maradt
 
     // hasEffect test
-    $.writeln(hasEffect);
+    // $.writeln(hasEffect);
 
     var qeTrack;
 
@@ -155,9 +155,6 @@ if (hasEffect == false) {
                         // Hozzáadjuk a clip-hez a megadott "effect"-et
                         qeClip = qeSequence.getVideoTrackAt(c1).getItemAt(c2);
                         qeClip.addVideoEffect(qe.project.getVideoEffectByName(effect));
-
-                        // Beletesszük az összes componenst egy változóba
-                        var components = app.project.activeSequence.videoTracks[c1].clips[c2].components;
 
                         // Végig megyünk a componenseken
                         for (var c3 = 0; c3 < qeClip.numComponents; c3++) {
