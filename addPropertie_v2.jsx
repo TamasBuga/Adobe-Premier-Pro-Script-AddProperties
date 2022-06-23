@@ -64,7 +64,7 @@ for (var i = 0; i < videoTracks.numTracks; i++) {
                             // $.writeln(clipComponent.name);
                             
                             var propertie = get_properties(clipComponent.name, qeClip.name);
-                            $.writeln(propertie[0].displayName);
+                            // $.writeln(propertie[0].displayName);
 
                             // Ide jönnek a paraméter beállítások !
                             // =====================================================================================================
