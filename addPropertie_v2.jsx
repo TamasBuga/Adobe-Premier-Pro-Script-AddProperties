@@ -14,6 +14,8 @@
 
 app.enableQE();
 
+qe.project.getSequenceAt(0).flushCache();
+
 var effect = "Crop";
 
 var qeProject = qe.project;
@@ -41,7 +43,7 @@ for (var i = 0; i < videoTracks.numTracks; i++) {
             // (a 2. kód nem fut le ha "hasEffect" = true)
             if (hasEffect == false && clip_is_selected(qeTrack_1.getItemAt(j), i)) {
 
-                qeClip = qeTrack_1.getItemAt(j);
+                qeClip = qeProject.getSequenceAt(0).getVideoTrackAt(i).getItemAt(j);
                 // Ez a loop végig megy a clip komponensein
                 for (var k = 0; k < qeClip.numComponents; k++) {
 
@@ -49,7 +51,7 @@ for (var i = 0; i < videoTracks.numTracks; i++) {
                     if (qeClip.getComponentAt(k).name == effect) {
 
                         // component name test
-                        // $.writeln(qeClip.getComponentAt(i).name);
+                        // $.writeln(qeClip.getComponentAt(k).name);
 
                         // A "hasEffect"-et "true"-ra állítjuk, hogy a loop-on kívüli a 2.-es kód ne fusson le
                         hasEffect = true;
@@ -60,12 +62,13 @@ for (var i = 0; i < videoTracks.numTracks; i++) {
                             // Létrehozunk egy "clipComponent" nevű változót, amiben az "[i]".-edik track-nek az "[j]".-edik clip-jét tároljuk, hogy a clip.properties-t megtudjuk hívni
                             clipComponent = qeClip.getComponentAt(k);
                             // $.writeln(clipComponent.name);
-
+                            
                             var propertie = get_properties(clipComponent.name, qeClip.name);
+                            $.writeln(propertie[0].displayName);
 
                             // Ide jönnek a paraméter beállítások !
                             // =====================================================================================================
-                            propertie[0].setValue(40, 1);
+                            propertie[0].setValue(10, 1);
                             
 
 
@@ -118,11 +121,11 @@ function get_properties(qeCompName, clipName) {
 //=====================================================================================================
 //  2. Kód = AddEffect && Properties
 //=====================================================================================================
-if (!hasEffect) {
+if (hasEffect == false) {
     // A script belépett ebbe a kódba, mivel a "hasEffect" továbbra is false maradt
 
     // hasEffect test
-    // $.writeln(hasEffect);
+    $.writeln(hasEffect);
 
     var qeTrack;
 
@@ -157,17 +160,17 @@ if (!hasEffect) {
                         var components = app.project.activeSequence.videoTracks[c1].clips[c2].components;
 
                         // Végig megyünk a componenseken
-                        for (var c3 = 0; c3 < components.numItems; c3++) {
-
+                        for (var c3 = 0; c3 < qeClip.numComponents; c3++) {
+                            
                             // Ha megtalálta az effect-et...
-                            if (components[c3].displayName == effect) {
+                            if (qeClip.getComponentAt(c3).name == effect) {
 
                                 // Egy változóba tesszük az összes beállítást
-                                var propertie = components[c3].properties;
+                                var propertie = get_properties(qeClip.getComponentAt(c3).name, qeClip.name);
 
                                 // Ide jönnek a paraméter beállítások !
                                 // =====================================================================================================
-                                propertie[0].setValue(0, 1);
+                                propertie[0].setValue(40, 1);
                                 
                                 
                                 
